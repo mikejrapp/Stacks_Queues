@@ -1,0 +1,4 @@
+﻿  StackAndQueue.cpp
+f:\users\mike\documents\code\school\data_structures\stack_queue\stackandqueue\stackandqueue\stack.h(61): warning C4715: 'Stack<int>::pop': not all control paths return a value
+  StackAndQueue.vcxproj -> F:\Users\Mike\Documents\Code\School\Data_Structures\Stack_Queue\StackAndQueue\Debug\StackAndQueue.exe
+  StackAndQueue.vcxproj -> F:\Users\Mike\Documents\Code\School\Data_Structures\Stack_Queue\StackAndQueue\Debug\StackAndQueue.pdb (Partial PDB)
