@@ -48,8 +48,10 @@ const void Stack<T>::push(T pData) {
 
 template<class T>
 T Stack<T>::pop() {
-	if (this->isEmpty()) {
-		cout << "Error: Stack Underflow" << endl;
+	
+	if (isEmpty()) {
+		cout << "Stack Underflow! Null value: ";
+		return NULL;
 	}
 	else {
 		T data = top->data;
@@ -58,6 +60,7 @@ T Stack<T>::pop() {
 		delete temp;
 		return data;
 	}
+	
 }
 
 template<class T>
