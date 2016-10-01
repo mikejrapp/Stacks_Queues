@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<iomanip>
 #include"Stack.h"
 #include"Queue.h"
 
@@ -81,25 +82,37 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 		cout << "File not found.";
 	}
 	else {
+		int width = 15;
+		cout << setw(width) << "Operation" << setw(width) << " Stack" << setw(width) << " Value" << setw(width) << " Result" << endl;
 		while (!inFile.eof()) {
 			getline(inFile, line);
 			if (line.find("push") != string::npos) {
 				data = line.substr(line.find_first_of("h") + OFFSET, line.length() - 1);
 				iData = stoi(data);
-				cout << "Pushing " << data << " onto stack." << endl;
+				cout << setw(width) << "Push" << setw(width) << " Stack " << setw(width) << data << setw(width) << " Success" << endl;
 				pStack.push(iData);
 			}//end if
 			if (line.find("pop") != string::npos) {
-				cout << "Popping " << pStack.pop() << " off of stack" << endl;
+				if (pStack.pop()) {
+					cout << setw(width) << "Pop" << setw(width) << " Stack" << setw(width) << " --" << setw(width) << " Success" << endl;
+				}
+				else {
+					cout << setw(width) << "Pop" << setw(width) << " Stack" << setw(width) << " --" << setw(width) << " Underflow" << endl;
+				}
 			}
 			if (line.find("append") != string::npos) {
 				data = line.substr(line.find_first_of("d") + OFFSET, line.length() - 1);
 				iData = stoi(data);
-				cout << "Appending " << data << " onto queue." << endl;
+				cout << setw(width) << "Appending" << setw(width) << " Queue " << setw(width) << data << setw(width) << " Success" << endl;
 				pQueue.append(iData);
 			}
 			if (line.find("serve") != string::npos) {
-				cout << "Serving: " << pQueue.serve() << " of queue" << endl;
+				if (pQueue.serve()) {
+					cout << setw(width) << "Serve" << setw(width) << " Queue" << setw(width) << " --" << setw(width) << " Success" << endl;
+				}
+				else {
+					cout << setw(width) << "Serve" << setw(width) << " Queue" << setw(width) << " --" << setw(width) << " Underflow" << endl;
+				}
 			}
 		}//end while
 	}//end if !inFile

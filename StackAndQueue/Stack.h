@@ -18,7 +18,7 @@ class Stack {
 public:
 	Stack();
 	const void push(T pData);
-	T pop();
+	bool pop();
 	bool isEmpty();
 private:
 	node<T>* top;
@@ -47,25 +47,18 @@ const void Stack<T>::push(T pData) {
 }
 
 template<class T>
-T Stack<T>::pop() {
+bool Stack<T>::pop() {
 	
-	//try {
-		//int nullPointer = 0;
-		if (isEmpty()) {
-			cout << "Stack Underflow" << endl;
-			return NULL;
-		}
-		else {
-			T data = top->data;
-			temp = top;
-			top = top->next;
-			delete temp;
-			return data;
-		}
-	//}
-	/*catch (int error) {
-		cout << "Stack Underflow" << endl;
-	}*/
+	if (!isEmpty()) {
+		T data = top->data;
+		temp = top;
+		top = top->next;
+		delete temp;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 template<class T>

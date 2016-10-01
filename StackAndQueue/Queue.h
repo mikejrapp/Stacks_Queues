@@ -20,7 +20,7 @@ class Queue {
 public:
 	Queue();
 	const void append(T data);
-	T serve();
+	bool serve();
 	bool isEmpty();
 private:
 	dNode<T>* head;
@@ -54,13 +54,11 @@ const void Queue<T>::append(T data) {
 }
 
 template<class T>
-T Queue<T>::serve() {
+bool Queue<T>::serve() {
 	if (isEmpty()) {
-		cout << "Queue Underflow! Null value: ";
-		return NULL;
+		return false;
 	}
 	else {
-		T tempData = head->data;
 		temp = head;
 		if (head->prev != nullptr) {
 			head = head->prev;
@@ -70,7 +68,7 @@ T Queue<T>::serve() {
 			head = nullptr;
 		}
 		delete temp;
-		return tempData;
+		return true;
 	}
 }
 

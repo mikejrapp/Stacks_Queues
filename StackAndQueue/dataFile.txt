@@ -1,3 +1,5 @@
+pop
+serve
 append 10
 serve
 append 20
