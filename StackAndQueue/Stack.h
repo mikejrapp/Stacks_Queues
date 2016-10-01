@@ -49,18 +49,23 @@ const void Stack<T>::push(T pData) {
 template<class T>
 T Stack<T>::pop() {
 	
-	if (isEmpty()) {
-		cout << "Stack Underflow! Null value: ";
-		return NULL;
-	}
-	else {
-		T data = top->data;
-		temp = top;
-		top = top->next;
-		delete temp;
-		return data;
-	}
-	
+	//try {
+		//int nullPointer = 0;
+		if (isEmpty()) {
+			cout << "Stack Underflow" << endl;
+			return NULL;
+		}
+		else {
+			T data = top->data;
+			temp = top;
+			top = top->next;
+			delete temp;
+			return data;
+		}
+	//}
+	/*catch (int error) {
+		cout << "Stack Underflow" << endl;
+	}*/
 }
 
 template<class T>

@@ -15,10 +15,15 @@ int main() {
 	Stack<int> stack;
 	Queue<int> queue;
 	ifstream inFile;
+	int userSelection = 0;
 
-	/*test(stack);
-	testQ(queue);*/
-	readFile(stack, queue, inFile);
+	do {
+		readFile(stack, queue, inFile);
+		cout << "Would you like to: " << endl;
+		cout << "1) Enter another file" << endl;
+		cout << "2) Exit program" << endl;
+		cin >> userSelection;
+	} while (userSelection != 2);
 
 	cin.ignore();
 	cin.get();
@@ -67,13 +72,13 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 	string data;
 	int iData;
 	const int OFFSET = 2; //used as the offset for parsing the string. Finds last character of command, then moves to first pos of data.
+
 	cout << "Please enter the file path including the file extension: ";
 	cin >> filepath;
 	inFile.open(filepath);
 
-
 	if (!inFile) {
-		cout << "File not found. Program terminates.";
+		cout << "File not found.";
 	}
 	else {
 		while (!inFile.eof()) {
@@ -86,6 +91,15 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 			}//end if
 			if (line.find("pop") != string::npos) {
 				cout << "Popping " << pStack.pop() << " off of stack" << endl;
+			}
+			if (line.find("append") != string::npos) {
+				data = line.substr(line.find_first_of("d") + OFFSET, line.length() - 1);
+				iData = stoi(data);
+				cout << "Appending " << data << " onto queue." << endl;
+				pQueue.append(iData);
+			}
+			if (line.find("serve") != string::npos) {
+				cout << "Serving: " << pQueue.serve() << " of queue" << endl;
 			}
 		}//end while
 	}//end if !inFile
