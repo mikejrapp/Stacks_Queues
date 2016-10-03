@@ -20,6 +20,8 @@ public:
 	const void push(T pData);
 	bool pop();
 	bool isEmpty();
+	void deleteStack();
+	void printStack();
 private:
 	node<T>* top;
 	node<T>* temp;
@@ -33,6 +35,7 @@ Stack<T>::Stack() {
 
 template<class T>
 const void Stack<T>::push(T pData) {
+	//This function pushes data onto the stack
 	if (this->isEmpty()) {
 		top = new node<T>;
 		top->data = pData;
@@ -48,7 +51,7 @@ const void Stack<T>::push(T pData) {
 
 template<class T>
 bool Stack<T>::pop() {
-	
+	//this function pops data off the stack and returns false if the stack is empty.
 	if (!isEmpty()) {
 		T data = top->data;
 		temp = top;
@@ -57,17 +60,39 @@ bool Stack<T>::pop() {
 		return true;
 	}
 	else {
+		//underflow
 		return false;
 	}
 }
 
 template<class T>
 bool Stack<T>::isEmpty() {
+	//this function returns true if the stack is empty
 	if (top == nullptr) {
 		return true;
 	}
 	else {
 		return false;
+	}
+}
+
+template<class T>
+void Stack<T>::deleteStack() {
+	//this function deletes the stack by popping everything off the stack
+	while (!isEmpty()) {
+		pop();
+	}
+}
+
+template<class T>
+void Stack<T>::printStack() {
+	//this function prints what is on the stack.
+	T printData;
+	temp = top;
+	while (temp != nullptr) {
+		printData = temp->data;
+		cout << printData << endl;
+		temp = temp->next;
 	}
 }
 #endif

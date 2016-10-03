@@ -1,3 +1,12 @@
+/*
+CS240, Section ...
+Program 3 "Stacks and Queues"
+Author: Michael Rapp
+Date: 0/1/2016
+Description: This program reads data from a file which contains as part of the data commands for the corresponding information which it then
+			 executes within the program.
+*/
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -7,14 +16,12 @@
 
 using namespace std;
 
-void test(Stack<int> &pStack);
-void testQ(Queue<int> &pQueue);
-void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile);
+void readFile(Stack<int>* pStack, Queue<int>* pQueue, ifstream &inFile);
 
 int main() {
 	
-	Stack<int> stack;
-	Queue<int> queue;
+	Stack<int>* stack = new Stack<int>;
+	Queue<int>* queue = new Queue<int>;
 	ifstream inFile;
 	int userSelection = 0;
 
@@ -23,51 +30,31 @@ int main() {
 		cout << "Would you like to: " << endl;
 		cout << "1) Enter another file" << endl;
 		cout << "2) Exit program" << endl;
-		cin >> userSelection;
+		cin >> userSelection;	
+		while (cin.fail()) {
+			cin.clear();
+			cin.ignore();
+			cout << "Please enter a number: ";
+			cin >> userSelection;
+		}
+		while (userSelection != 1 && userSelection != 2) {
+			cout << "Please enter either 1 or 2" << endl;
+			cin >> userSelection;
+		}
+		if (userSelection == 1) {
+			stack->deleteStack();
+			queue->deleteQueue();
+		}
 	} while (userSelection != 2);
 
 	cin.ignore();
+	cout << "Program complete. Press enter to close.";
 	cin.get();
 	return 0;
 }
 
-void test(Stack<int> &pStack) {
-	cout << "pushing 1 onto stack" << endl;
-	pStack.push(1);
-	cout << "pushing 2 onto stack" << endl;
-	pStack.push(2);
-	cout << "pushing 3 onto stack" << endl;
-	pStack.push(3);
-
-	cout << "popping first item: ";
-	cout << pStack.pop() << endl;
-	cout << "popping next item: ";
-	cout << pStack.pop() << endl;
-	cout << "popping next item: ";
-	cout << pStack.pop() << endl;
-	cout << "popping next item: ";
-	cout << pStack.pop() << endl;
-}
-
-void testQ(Queue<int> &pQueue) {
-	cout << "appending 1 onto queue" << endl;
-	pQueue.append(1);
-	cout << "appending 2 onto queue" << endl;
-	pQueue.append(2);
-	cout << "appending 3 onto queue" << endl;
-	pQueue.append(3);
-
-	cout << "Serving first item: ";
-	cout << pQueue.serve() << endl;
-	cout << "Serving next item: ";
-	cout << pQueue.serve() << endl;
-	cout << "Serving next item: ";
-	cout << pQueue.serve() << endl;
-	cout << "Serving next item: ";
-	cout << pQueue.serve() << endl;
-}
-
-void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
+void readFile(Stack<int>* pStack, Queue<int>* pQueue, ifstream &inFile) {
+	//This function reads in the command and data from the file and loads the data into the stack or queue
 	string filepath;
 	string line;
 	string data;
@@ -90,10 +77,10 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 				data = line.substr(line.find_first_of("h") + OFFSET, line.length() - 1);
 				iData = stoi(data);
 				cout << setw(width) << "Push" << setw(width) << " Stack " << setw(width) << data << setw(width) << " Success" << endl;
-				pStack.push(iData);
+				pStack->push(iData);
 			}//end if
 			if (line.find("pop") != string::npos) {
-				if (pStack.pop()) {
+				if (pStack->pop()) {
 					cout << setw(width) << "Pop" << setw(width) << " Stack" << setw(width) << " --" << setw(width) << " Success" << endl;
 				}
 				else {
@@ -104,10 +91,10 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 				data = line.substr(line.find_first_of("d") + OFFSET, line.length() - 1);
 				iData = stoi(data);
 				cout << setw(width) << "Appending" << setw(width) << " Queue " << setw(width) << data << setw(width) << " Success" << endl;
-				pQueue.append(iData);
+				pQueue->append(iData);
 			}
 			if (line.find("serve") != string::npos) {
-				if (pQueue.serve()) {
+				if (pQueue->serve()) {
 					cout << setw(width) << "Serve" << setw(width) << " Queue" << setw(width) << " --" << setw(width) << " Success" << endl;
 				}
 				else {
@@ -115,5 +102,10 @@ void readFile(Stack<int> &pStack, Queue<int> &pQueue, ifstream &inFile) {
 				}
 			}
 		}//end while
+		cout << "Stack:" << endl;
+		pStack->printStack();
+		cout << "Queue:" << endl;
+		pQueue->printQueue();
+		inFile.close();
 	}//end if !inFile
 }
